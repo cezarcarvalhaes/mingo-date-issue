@@ -1,12 +1,5 @@
 const runMingo = require("./runMingo");
 
-const data = [
-  {
-    "date": "02/01/2022"
-  },
-  
-];
-
 const script = [
     {
     $addFields: {
@@ -20,36 +13,54 @@ const script = [
   },
   {
     $addFields: {
-      yearFromDate: {
+      newDate: {
           $dateFromParts: {
           year: {
-                $year: "$parsedDate",
+            $year: "$parsedDate",
           },
           month: {
             $month: "$parsedDate",
-            
           },
           day: {
-            // $subtract: [
-            //   {
+            $subtract: [
+              {
                 $dayOfMonth: "$parsedDate",
-                
-            //   },
-            //   1,
-              
-            // ],
-            
+              },
+              1,
+            ],
           },
-          
         },
       },
     },
   },
   {
     $project: {
-      value: "$yearFromDate",
+      value: {
+              $dateToString: {
+                date: '$newDate',
+                format: '%m/%d/%Y',
+              },
+            },
     },
   },
 ];
 
-console.log(runMingo(script, data))
+const checkDates = (date) => {
+  const { value, error } = runMingo(script, { date });
+  if (error) {
+    console.error(error);
+    return;
+  }
+  console.log(`input: ${date} | output: ${value}`);
+};
+
+const datesToCheck = [
+ '02/01/2022',
+ '01/31/2022',
+ '03/01/2022',
+ '03/17/2022',
+];
+
+datesToCheck.forEach((date) => {
+  checkDates(date)
+});

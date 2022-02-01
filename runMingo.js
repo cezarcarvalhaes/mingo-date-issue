@@ -27,7 +27,6 @@ const runMingo = (script, data) => {
 	try {
 		const calculator = new Aggregator(script);
 		const info = Array.isArray(data) ? data : [data];
-    console.log(info)
 		const [result] = calculator.run(info);
 		return { value: result.value };
 	} catch (error) {
