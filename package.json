@@ -1,0 +1,11 @@
+{
+  "name": "mingo-date-issue",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:cezarcarvalhaes/mingo-date-issue.git",
+  "author": "Cezar Carvalhaes <cezarcarvalhaes@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mingo": "^6.0.0"
+  }
+}
